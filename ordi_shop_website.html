@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DES ORDI A PETIT PRIX - Ordinateurs à Prix Abordables</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .contact-header {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-header a {
+            color: #fff;
+            background: #25D366;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .contact-header a:hover {
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .category {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 10px;
+            border-bottom: 4px solid #764ba2;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .category-price {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product {
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #e0e0e0;
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .product-images {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .product-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            transition: opacity 0.5s;
+        }
+
+        .product-images img:not(:first-child) {
+            opacity: 0;
+        }
+
+        .image-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: #667eea;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 1.8em;
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1em;
+            color: #666;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 15px 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .btn-phone {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .category-title {
+                font-size: 1.5em;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.98);
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🖥️ DES ORDI A PETIT PRIX</h1>
+        <p>Votre partenaire informatique de confiance en Côte d'Ivoire</p>
+        <div class="contact-header">
+            <a href="https://wa.me/2250565978623">📱 WhatsApp: +225 0565978623</a>
+            <a href="tel:+2250565978623">📞 Appeler maintenant</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Catégorie 1: 0 - 100.000 XOF -->
+        <div class="category">
+            <h2 class="category-title">💰 Entrée de Gamme</h2>
+            <p class="category-price">0 - 100.000 XOF</p>
+            <div class="products">
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600" alt="Dell Latitude E5430">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600" alt="Dell vue 2">
+                        <img src="https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=600" alt="Dell vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Dell Latitude E5430</h3>
+                        <div class="product-price">75.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i5<br>
+                            • RAM: 4 Go<br>
+                            • Disque: 320 Go HDD<br>
+                            • Écran: 14 pouces<br>
+                            • État: Reconditionné
+                        </div>
+                        <div class="tab-content">
+                            ✅ 3 mois de garantie<br>
+                            ✅ Support technique inclus<br>
+                            ✅ Échange possible en cas de défaut
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison rapide à Abidjan<br>
+                            📦 Possibilité d'envoi en province<br>
+                            ⚡ Livraison en 24-48h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Dell Latitude E5430 à 75.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600" alt="HP ProBook 450">
+                        <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600" alt="HP vue 2">
+                        <img src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600" alt="HP vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">HP ProBook 450 G3</h3>
+                        <div class="product-price">85.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i5<br>
+                            • RAM: 8 Go<br>
+                            • Disque: 500 Go HDD<br>
+                            • Écran: 15,6 pouces<br>
+                            • État: Reconditionné
+                        </div>
+                        <div class="tab-content">
+                            ✅ 3 mois de garantie<br>
+                            ✅ Support technique inclus<br>
+                            ✅ Échange possible en cas de défaut
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison rapide à Abidjan<br>
+                            📦 Possibilité d'envoi en province<br>
+                            ⚡ Livraison en 24-48h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le HP ProBook 450 G3 à 85.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1504707748692-419802cf939d?w=600" alt="Toshiba Satellite">
+                        <img src="https://images.unsplash.com/photo-1461151304267-38535e780c79?w=600" alt="Toshiba vue 2">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600" alt="Toshiba vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Toshiba Satellite C50</h3>
+                        <div class="product-price">65.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i3<br>
+                            • RAM: 4 Go<br>
+                            • Disque: 500 Go HDD<br>
+                            • Écran: 15,6 pouces<br>
+                            • État: Reconditionné
+                        </div>
+                        <div class="tab-content">
+                            ✅ 3 mois de garantie<br>
+                            ✅ Support technique inclus<br>
+                            ✅ Échange possible en cas de défaut
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison rapide à Abidjan<br>
+                            📦 Possibilité d'envoi en province<br>
+                            ⚡ Livraison en 24-48h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Toshiba Satellite C50 à 65.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600" alt="Acer Aspire">
+                        <img src="https://images.unsplash.com/photo-1585789575417-76c9a06b2285?w=600" alt="Acer vue 2">
+                        <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600" alt="Acer vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Acer Aspire E15</h3>
+                        <div class="product-price">95.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i5<br>
+                            • RAM: 8 Go<br>
+                            • Disque: 1 To HDD<br>
+                            • Écran: 15,6 pouces HD<br>
+                            • État: Reconditionné
+                        </div>
+                        <div class="tab-content">
+                            ✅ 3 mois de garantie<br>
+                            ✅ Support technique inclus<br>
+                            ✅ Échange possible en cas de défaut
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison rapide à Abidjan<br>
+                            📦 Possibilité d'envoi en province<br>
+                            ⚡ Livraison en 24-48h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Acer Aspire E15 à 95.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600" alt="Lenovo IdeaPad">
+                        <img src="https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=600" alt="Lenovo vue 2">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600" alt="Lenovo vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Lenovo IdeaPad 320</h3>
+                        <div class="product-price">78.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i3<br>
+                            • RAM: 6 Go<br>
+                            • Disque: 500 Go HDD<br>
+                            • Écran: 15,6 pouces<br>
+                            • État: Bon état
+                        </div>
+                        <div class="tab-content">
+                            ✅ 3 mois de garantie<br>
+                            ✅ Support technique inclus<br>
+                            ✅ Échange possible en cas de défaut
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison rapide à Abidjan<br>
+                            📦 Possibilité d'envoi en province<br>
+                            ⚡ Livraison en 24-48h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Lenovo IdeaPad 320 à 78.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Catégorie 2: 100.000 - 200.000 XOF -->
+        <div class="category">
+            <h2 class="category-title">⭐ Milieu de Gamme</h2>
+            <p class="category-price">100.000 - 200.000 XOF</p>
+            <div class="products">
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600" alt="Lenovo ThinkPad">
+                        <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600" alt="Lenovo vue 2">
+                        <img src="https://images.unsplash.com/photo-1611078489935-0cb964de46d6?w=600" alt="Lenovo vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Lenovo ThinkPad T470</h3>
+                        <div class="product-price">135.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i5 7ème Gen<br>
+                            • RAM: 8 Go DDR4<br>
+                            • Disque: 256 Go SSD<br>
+                            • Écran: 14 pouces Full HD<br>
+                            • État: Excellent
+                        </div>
+                        <div class="tab-content">
+                            ✅ 6 mois de garantie<br>
+                            ✅ Support technique prioritaire<br>
+                            ✅ Échange sous 15 jours
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite à Abidjan<br>
+                            📦 Envoi sécurisé en province<br>
+                            ⚡ Livraison express 24h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Lenovo ThinkPad T470 à 135.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600" alt="Dell Latitude 7480">
+                        <img src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600" alt="Dell vue 2">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600" alt="Dell vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Dell Latitude 7480</h3>
+                        <div class="product-price">165.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i7 7ème Gen<br>
+                            • RAM: 16 Go DDR4<br>
+                            • Disque: 512 Go SSD<br>
+                            • Écran: 14 pouces Full HD<br>
+                            • État: Comme neuf
+                        </div>
+                        <div class="tab-content">
+                            ✅ 6 mois de garantie<br>
+                            ✅ Support technique prioritaire<br>
+                            ✅ Échange sous 15 jours
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite à Abidjan<br>
+                            📦 Envoi sécurisé en province<br>
+                            ⚡ Livraison express 24h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Dell Latitude 7480 à 165.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600" alt="HP EliteBook 820">
+                        <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?w=600" alt="HP vue 2">
+                        <img src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600" alt="HP vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">HP EliteBook 820 G3</h3>
+                        <div class="product-price">145.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i5 6ème Gen<br>
+                            • RAM: 8 Go DDR4<br>
+                            • Disque: 256 Go SSD<br>
+                            • Écran: 12,5 pouces Full HD<br>
+                            • État: Excellent, ultra portable
+                        </div>
+                        <div class="tab-content">
+                            ✅ 6 mois de garantie<br>
+                            ✅ Support technique prioritaire<br>
+                            ✅ Échange sous 15 jours
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite à Abidjan<br>
+                            📦 Envoi sécurisé en province<br>
+                            ⚡ Livraison express 24h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le HP EliteBook 820 G3 à 145.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600" alt="Asus VivoBook">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600" alt="Asus vue 2">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600" alt="Asus vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Asus VivoBook S15</h3>
+                        <div class="product-price">178.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i7 8ème Gen<br>
+                            • RAM: 12 Go DDR4<br>
+                            • Disque: 512 Go SSD<br>
+                            • Écran: 15,6 pouces Full HD<br>
+                            • État: Excellent
+                        </div>
+                        <div class="tab-content">
+                            ✅ 6 mois de garantie<br>
+                            ✅ Support technique prioritaire<br>
+                            ✅ Échange sous 15 jours
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite à Abidjan<br>
+                            📦 Envoi sécurisé en province<br>
+                            ⚡ Livraison express 24h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Asus VivoBook S15 à 178.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600" alt="Dell Inspiron">
+                        <img src="https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=600" alt="Dell vue 2">
+                        <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600" alt="Dell vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Dell Inspiron 15 5570</h3>
+                        <div class="product-price">155.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i5 8ème Gen<br>
+                            • RAM: 8 Go DDR4<br>
+                            • Disque: 1 To HDD + 128 Go SSD<br>
+                            • Écran: 15,6 pouces Full HD<br>
+                            • État: Très bon état
+                        </div>
+                        <div class="tab-content">
+                            ✅ 6 mois de garantie<br>
+                            ✅ Support technique prioritaire<br>
+                            ✅ Échange sous 15 jours
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite à Abidjan<br>
+                            📦 Envoi sécurisé en province<br>
+                            ⚡ Livraison express 24h
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Dell Inspiron 15 5570 à 155.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Catégorie 3: 200.000+ XOF -->
+        <div class="category">
+            <h2 class="category-title">🏆 Haut de Gamme</h2>
+            <p class="category-price">200.000 XOF et plus</p>
+            <div class="products">
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600" alt="MacBook Pro">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600" alt="MacBook vue 2">
+                        <img src="https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?w=600" alt="MacBook vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">MacBook Pro 2017</h3>
+                        <div class="product-price">285.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i5<br>
+                            • RAM: 8 Go<br>
+                            • Disque: 256 Go SSD<br>
+                            • Écran: 13 pouces Retina<br>
+                            • État: Excellent, batterie 85%
+                        </div>
+                        <div class="tab-content">
+                            ✅ 1 an de garantie<br>
+                            ✅ Support technique VIP<br>
+                            ✅ Échange sous 30 jours<br>
+                            ✅ Réparation gratuite
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite partout en CI<br>
+                            📦 Emballage premium<br>
+                            ⚡ Livraison express 12-24h<br>
+                            🎁 Sacoche offerte
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le MacBook Pro 2017 à 285.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600" alt="HP EliteBook">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600" alt="HP vue 2">
+                        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600" alt="HP vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">HP EliteBook 840 G5</h3>
+                        <div class="product-price">235.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i7 8ème Gen<br>
+                            • RAM: 16 Go DDR4<br>
+                            • Disque: 512 Go SSD NVMe<br>
+                            • Écran: 14 pouces Full HD<br>
+                            • État: Comme neuf
+                        </div>
+                        <div class="tab-content">
+                            ✅ 1 an de garantie<br>
+                            ✅ Support technique VIP<br>
+                            ✅ Échange sous 30 jours<br>
+                            ✅ Réparation gratuite
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite partout en CI<br>
+                            📦 Emballage premium<br>
+                            ⚡ Livraison express 12-24h<br>
+                            🎁 Souris sans fil offerte
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le HP EliteBook 840 G5 à 235.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600" alt="Lenovo ThinkPad X1">
+                        <img src="https://images.unsplash.com/photo-1611078489935-0cb964de46d6?w=600" alt="Lenovo vue 2">
+                        <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600" alt="Lenovo vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Lenovo ThinkPad X1 Carbon Gen 6</h3>
+                        <div class="product-price">315.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i7 8ème Gen<br>
+                            • RAM: 16 Go DDR4<br>
+                            • Disque: 512 Go SSD NVMe<br>
+                            • Écran: 14 pouces Full HD IPS<br>
+                            • État: Excellent, ultra-léger
+                        </div>
+                        <div class="tab-content">
+                            ✅ 1 an de garantie<br>
+                            ✅ Support technique VIP<br>
+                            ✅ Échange sous 30 jours<br>
+                            ✅ Réparation gratuite
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite partout en CI<br>
+                            📦 Emballage premium<br>
+                            ⚡ Livraison express 12-24h<br>
+                            🎁 Sacoche de luxe offerte
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Lenovo ThinkPad X1 Carbon Gen 6 à 315.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600" alt="Dell XPS 13">
+                        <img src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600" alt="Dell vue 2">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600" alt="Dell vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Dell XPS 13 9370</h3>
+                        <div class="product-price">345.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Core i7 8ème Gen<br>
+                            • RAM: 16 Go DDR4<br>
+                            • Disque: 512 Go SSD NVMe<br>
+                            • Écran: 13,3 pouces 4K UHD<br>
+                            • État: Comme neuf, design premium
+                        </div>
+                        <div class="tab-content">
+                            ✅ 1 an de garantie<br>
+                            ✅ Support technique VIP<br>
+                            ✅ Échange sous 30 jours<br>
+                            ✅ Réparation gratuite
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite partout en CI<br>
+                            📦 Emballage premium<br>
+                            ⚡ Livraison express 12-24h<br>
+                            🎁 Adaptateurs & souris offerts
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le Dell XPS 13 9370 à 345.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-images">
+                        <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600" alt="HP ZBook">
+                        <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?w=600" alt="HP vue 2">
+                        <img src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600" alt="HP vue 3">
+                        <div class="image-dots"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">HP ZBook 15 G5</h3>
+                        <div class="product-price">425.000 XOF</div>
+                        <div class="tabs">
+                            <button class="tab active" onclick="switchTab(this, 0)">Caractéristiques</button>
+                            <button class="tab" onclick="switchTab(this, 1)">Garantie</button>
+                            <button class="tab" onclick="switchTab(this, 2)">Livraison</button>
+                        </div>
+                        <div class="tab-content active">
+                            • Processeur: Intel Xeon E-2186M<br>
+                            • RAM: 32 Go DDR4<br>
+                            • Disque: 1 To SSD NVMe<br>
+                            • GPU: NVIDIA Quadro P2000<br>
+                            • Écran: 15,6 pouces 4K<br>
+                            • État: Excellent, workstation
+                        </div>
+                        <div class="tab-content">
+                            ✅ 1 an de garantie<br>
+                            ✅ Support technique VIP<br>
+                            ✅ Échange sous 30 jours<br>
+                            ✅ Réparation gratuite
+                        </div>
+                        <div class="tab-content">
+                            🚚 Livraison gratuite partout en CI<br>
+                            📦 Emballage premium sécurisé<br>
+                            ⚡ Livraison express 12-24h<br>
+                            🎁 Pack accessoires complet offert
+                        </div>
+                        <div class="product-actions">
+                            <a href="https://wa.me/2250565978623?text=Bonjour, je suis intéressé(e) par le HP ZBook 15 G5 à 425.000 XOF" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+2250565978623" class="btn btn-phone">📞 Appeler</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h3>🖥️ DES ORDI A PETIT PRIX</h3>
+        <p>Votre satisfaction, notre priorité</p>
+        <p style="margin-top: 15px;">📞 +225 0565978623 | 💬 WhatsApp disponible 24/7</p>
+        <p style="margin-top: 10px; color: #999;">© 2024 Des Ordi à Petit Prix - Tous droits réservés</p>
+    </footer>
+
+    <script>
+        // Initialisation des carousels d'images
+        document.addEventListener('DOMContentLoaded', function() {
+            const products = document.querySelectorAll('.product');
+            
+            products.forEach(product => {
+                const images = product.querySelectorAll('.product-images img');
+                const dotsContainer = product.querySelector('.image-dots');
+                
+                // Créer les dots
+                images.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'dot' + (index === 0 ? ' active' : '');
+                    dot.addEventListener('click', () => showImage(product, index));
+                    dotsContainer.appendChild(dot);
+                });
+                
+                // Auto-rotation des images
+                let currentIndex = 0;
+                setInterval(() => {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    showImage(product, currentIndex);
+                }, 4000);
+            });
+        });
+
+        function showImage(product, index) {
+            const images = product.querySelectorAll('.product-images img');
+            const dots = product.querySelectorAll('.dot');
+            
+            images.forEach((img, i) => {
+                img.style.opacity = i === index ? '1' : '0';
+            });
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        function switchTab(button, tabIndex) {
+            const product = button.closest('.product-info');
+            const tabs = product.querySelectorAll('.tab');
+            const contents = product.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            button.classList.add('active');
+            contents[tabIndex].classList.add('active');
+        }
+    </script>
+</body>
+</html>
